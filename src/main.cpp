@@ -1,21 +1,3 @@
-/**
-* ============================================================================
- *  Project     : FREQUENCY MEASUREMENT MODULE DESIGN
- *  Author      : Doan Van Ngoc – Student ID: 104317
- *  Version     : 3.3.18
- *
- *  Team Members:
- *      - Nguyen Ba Khiem – Student ID: …
- *      - Nguyen Truong Giang – Student ID: …
- *      - Tran Nam – Student ID: …
- *
- *  Instructor  : M.Sc. Vu Thi Thu
- *
- *  Notice      : © Doan Van Ngoc.
- *                Do not copy or use without permission.
- * ============================================================================
- */
-
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
 
@@ -33,7 +15,7 @@
 // Thời gian lấy mẫu (ms) - mặc định 1 giây
 #define SAMPLE_INTERVAL 1000
 
-// [SỬA ĐỔI] Thời gian debounce: NE555 tạo xung vuông sạch,
+// Thời gian debounce: NE555 tạo xung vuông sạch,
 // nên giảm về 0 để đo được tần số cao (>20kHz).
 // Nếu để 50us, tần số tối đa chỉ đo được 20kHz.
 #define DEBOUNCE_TIME 0
@@ -64,7 +46,7 @@ bool stringComplete = false;
 void countPulseISR() {
     unsigned long currentInterruptTime = micros();
 
-    // [SỬA ĐỔI LOGIC] NE555 phát xung tần số cao, ta bỏ qua debounce mềm
+    // NE555 phát xung tần số cao, ta bỏ qua debounce mềm
     // Nếu vẫn muốn lọc nhiễu cho nút nhấn cơ, hãy tăng DEBOUNCE_TIME > 0
 #if DEBOUNCE_TIME > 0
     if (currentInterruptTime - lastInterruptTime >= DEBOUNCE_TIME) {
@@ -259,7 +241,7 @@ void loop() {
 
         lastSampleTime = currentTime;
 
-        // [SỬA ĐỔI] In kết quả ra Serial theo định dạng chuẩn để máy tính dễ đọc
+        // In kết quả ra Serial theo định dạng chuẩn để máy tính dễ đọc
         // Định dạng 1: Dành cho người đọc (Verbose)
         Serial.print("Info: Xung=");
         Serial.print(count);
@@ -269,7 +251,7 @@ void loop() {
         Serial.print(frequency, 1);
         Serial.println("Hz");
 
-        // [THÊM] Định dạng 2: Dành cho máy tính vẽ đồ thị (Serial Plotter)
+        // Định dạng 2: Dành cho máy tính vẽ đồ thị (Serial Plotter)
         // Format: RawValue, FilteredValue
         Serial.print(rawFrequency);
         Serial.print(",");
